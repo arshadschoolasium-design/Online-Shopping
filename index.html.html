@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🛒 Online Shopping</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 0; 
+      padding: 0; 
+      background: #f9f9f9; 
+    }
+    header {
+      background: green; 
+      color: white; 
+      padding: 15px; 
+      text-align: center; 
+    }
+    h2 { margin-top: 30px; }
+    .container { padding: 20px; }
+    .products { display: flex; flex-wrap: wrap; gap: 15px; }
+    .product { 
+      background: #fff; 
+      border-radius: 10px; 
+      padding: 15px; 
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+      width: 180px; 
+      text-align: center; 
+    }
+    .product img { width: 100px; height: 100px; margin-bottom: 10px; }
+    .product button { 
+      background: green; 
+      color: white; 
+      border: none; 
+      padding: 8px 12px; 
+      margin-top: 8px; 
+      border-radius: 5px; 
+      cursor: pointer; 
+    }
+    .product button:hover { background: darkgreen; }
+    .cart, .checkout { 
+      background: #fff; 
+      padding: 20px; 
+      border-radius: 10px; 
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+      margin-top: 20px; 
+    }
+    input, select { 
+      margin: 8px 0; 
+      width: 100%; 
+      padding: 10px; 
+      border: 1px solid #ccc; 
+      border-radius: 5px; 
+    }
+    .checkout button { 
+      width: 100%; 
+      padding: 12px; 
+      font-size: 16px; 
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛍️ My Online Store</h1>
+  </header>
+
+  <div class="container">
+
+    <h2>🥦 Vegetables</h2>
+    <div class="products">
+      <div class="product">
+        <img src="https://via.placeholder.com/100" alt="Tomato">
+        <p>Tomato - ₹60/kg</p>
+        <button onclick="addToCart('Tomato', 60)">Add to Cart</button>
+      </div>
+      <div class="product">
+        <img src="https://via.placeholder.com/100" alt="Potato">
+        <p>Potato - ₹25/kg</p>
+        <button onclick="addToCart('Potato', 25)">Add to Cart</button>
+      </div>
+    </div>
+
+    <h2>🧼 Daily Use Items</h2>
+    <div class="products">
+      <div class="product">
+        <img src="https://via.placeholder.com/100" alt="Soap">
+        <p>Soap - ₹20</p>
+        <button onclick="addToCart('Soap', 20)">Add to Cart</button>
+      </div>
+      <div class="product">
+        <img src="https://via.placeholder.com/100" alt="Toothpaste">
+        <p>Toothpaste - ₹40</p>
+        <button onclick="addToCart('Toothpaste', 40)">Add to Cart</button>
+      </div>
+    </div>
+
+    <h2>🍚 Grocery</h2>
+    <div class="products">
+      <div class="product">
+        <img src="https://via.placeholder.com/100" alt="Rice">
+        <p>Rice - ₹50/kg</p>
+        <button onclick="addToCart('Rice', 50)">Add to Cart</button>
+      </div>
+      <div class="product">
+        <img src="https://via.placeholder.com/100" alt="Wheat">
+        <p>Wheat - ₹45/kg</p>
+        <button onclick="addToCart('Wheat', 45)">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="cart">
+      <h2>🛒 Your Cart</h2>
+      <ul id="cartItems"></ul>
+      <p><strong>Total: ₹<span id="total">0</span></strong></p>
+    </div>
+
+    <div class="checkout">
+      <h2>Checkout</h2>
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="text" id="mobile" placeholder="Mobile Number" required>
+      <input type="text" id="address" placeholder="Address" required>
+      <select id="payment">
+        <option value="Cash on Delivery">Cash on Delivery</option>
+        <option value="Online Payment">Online Payment</option>
+      </select>
+      <button onclick="placeOrder()">✅ Place Order</button>
+    </div>
+
+  </div>
+
+  <script>
+    let cart = [];
+    let total = 0;
+
+    function addToCart(item, price) {
+      cart.push({ item, price });
+      total += price;
+      displayCart();
+    }
+
+    function displayCart() {
+      let cartList = document.getElementById("cartItems");
+      cartList.innerHTML = "";
+      cart.forEach((c) => {
+        cartList.innerHTML += `<li>${c.item} - ₹${c.price}</li>`;
+      });
+      document.getElementById("total").innerText = total;
+    }
+
+    function placeOrder() {
+      let name = document.getElementById("name").value;
+      let mobile = document.getElementById("mobile").value;
+      let address = document.getElementById("address").value;
+      let payment = document.getElementById("payment").value;
+
+      if (!name || !mobile || !address) {
+        alert("⚠️ Please fill all details!");
+        return;
+      }
+
+      let orderItems = cart.map(c => `${c.item} (₹${c.price})`).join(", ");
+
+      let data = {
+        name: name,
+        mobile: mobile,
+        address: address,
+        item: orderItems,
+        payment: payment
+      };
+
+      let url = "YOUR_WEB_APP_URL"; // 👈 yahan apna Apps Script Web App URL daalna
+
+      fetch(url, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(() => {
+        alert("🎉 Your order has been placed successfully!");
+        cart = [];
+        total = 0;
+        displayCart();
+        document.getElementById("name").value = "";
+        document.getElementById("mobile").value = "";
+        document.getElementById("address").value = "";
+        document.getElementById("payment").value = "Cash on Delivery";
+      })
+      .catch(err => {
+        alert("❌ Error placing order. Try again!");
+      });
+    }
+  </script>
+</body>
+</html>
