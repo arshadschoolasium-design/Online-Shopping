@@ -5,106 +5,118 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Online Shopping</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-    header { background: #2c3e50; color: white; padding: 15px; text-align: center; }
-    nav { background: #34495e; padding: 10px; text-align: center; }
-    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
-    .container { padding: 20px; }
-    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-    .product { border: 1px solid #ddd; border-radius: 8px; padding: 15px; text-align: center; }
-    .product img { max-width: 100%; height: 150px; object-fit: cover; }
-    form { margin-top: 30px; max-width: 500px; margin-left: auto; margin-right: auto; }
-    input, select, textarea { width: 100%; padding: 10px; margin: 10px 0; }
-    button { background: #27ae60; color: white; padding: 10px; border: none; width: 100%; font-size: 16px; cursor: pointer; }
-    button:hover { background: #219150; }
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .product { border: 1px solid #ccc; padding: 10px; margin: 10px; display: inline-block; width: 180px; text-align: center; }
+    .cart { margin-top: 20px; border-top: 2px solid #000; padding-top: 10px; }
+    .checkout { margin-top: 20px; border-top: 2px solid green; padding-top: 10px; }
+    input, select { margin: 5px 0; width: 100%; padding: 8px; }
+    button { background: green; color: white; border: none; padding: 10px; cursor: pointer; }
+    button:hover { background: darkgreen; }
   </style>
 </head>
 <body>
-
-<header>
   <h1>🛒 Online Shopping</h1>
-  <p>Order groceries and daily items easily</p>
-</header>
 
-<nav>
-  <a href="#vegetables">Vegetables</a>
-  <a href="#fruits">Fruits</a>
-  <a href="#daily">Daily Needs</a>
-  <a href="#order">Order Now</a>
-</nav>
-
-<div class="container">
-  <h2 id="vegetables">🥦 Vegetables</h2>
-  <div class="products">
-    <div class="product">
-      <img src="https://i.ibb.co/jTtZfK3/tomato.jpg" alt="Tomato">
-      <h3>Tomato</h3>
-      <p>₹30 / kg</p>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/9n6jYV6/potato.jpg" alt="Potato">
-      <h3>Potato</h3>
-      <p>₹25 / kg</p>
-    </div>
+  <h2>Vegetables</h2>
+  <div class="product">
+    <img src="https://via.placeholder.com/100" alt="Tomato">
+    <p>Tomato - ₹60/kg</p>
+    <button onclick="addToCart('Tomato', 30)">Add to Cart</button>
+  </div>
+  <div class="product">
+    <img src="https://via.placeholder.com/100" alt="Potato">
+    <p>Potato - ₹25/kg</p>
+    <button onclick="addToCart('Potato', 25)">Add to Cart</button>
   </div>
 
-  <h2 id="fruits">🍎 Fruits</h2>
-  <div class="products">
-    <div class="product">
-      <img src="https://i.ibb.co/8D0WmFP/apple.jpg" alt="Apple">
-      <h3>Apple</h3>
-      <p>₹100 / kg</p>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/2g7c5kM/banana.jpg" alt="Banana">
-      <h3>Banana</h3>
-      <p>₹40 / dozen</p>
-    </div>
+  <h2>Daily Use Items</h2>
+  <div class="product">
+    <img src="https://via.placeholder.com/100" alt="Soap">
+    <p>Soap - ₹20</p>
+    <button onclick="addToCart('Soap', 20)">Add to Cart</button>
+  </div>
+  <div class="product">
+    <img src="https://via.placeholder.com/100" alt="Toothpaste">
+    <p>Toothpaste - ₹40</p>
+    <button onclick="addToCart('Toothpaste', 40)">Add to Cart</button>
   </div>
 
-  <h2 id="daily">🛍️ Daily Needs</h2>
-  <div class="products">
-    <div class="product">
-      <img src="https://i.ibb.co/MhRjJ9n/milk.jpg" alt="Milk">
-      <h3>Milk</h3>
-      <p>₹50 / litre</p>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/0c6k5TD/rice.jpg" alt="Rice">
-      <h3>Rice</h3>
-      <p>₹60 / kg</p>
-    </div>
+  <div class="cart">
+    <h2>🛒 Cart</h2>
+    <ul id="cartItems"></ul>
+    <p><strong>Total: ₹<span id="total">0</span></strong></p>
   </div>
 
-  <h2 id="order">📋 Place Your Order</h2>
-  <form id="orderForm">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="text" name="mobile" placeholder="Mobile Number" required>
-    <textarea name="address" placeholder="Delivery Address" required></textarea>
-    <select name="item" required>
-      <option value="">Select Item</option>
-      <option>Tomato</option>
-      <option>Potato</option>
-      <option>Apple</option>
-      <option>Banana</option>
-      <option>Milk</option>
-      <option>Rice</option>
+  <div class="checkout">
+    <h2>Checkout</h2>
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="text" id="mobile" placeholder="Mobile Number" required>
+    <input type="text" id="address" placeholder="Address" required>
+    <select id="payment">
+      <option value="Cash on Delivery">Cash on Delivery</option>
+      <option value="Online Payment">Online Payment</option>
     </select>
-    <button type="submit">Submit Order</button>
-  </form>
-</div>
+    <button onclick="placeOrder()">Place Order</button>
+  </div>
 
-<script>
-  const scriptURL = "https://script.google.com/macros/s/AKfycbyhMH16H8UndyYwXInWTbiYcsxaKsIjRwbXDlkf5ANpPftT2G7oYcQ6p6PPxpxPxMRX8A/exec";
-  const form = document.getElementById("orderForm");
+  <script>
+    let cart = [];
+    let total = 0;
 
-  form.addEventListener("submit", e => {
-    e.preventDefault();
-    fetch(scriptURL, { method: "POST", body: new FormData(form) })
-      .then(() => alert("✅ Order placed successfully!"))
-      .catch(error => alert("❌ Error: " + error.message));
-  });
-</script>
+    function addToCart(item, price) {
+      cart.push({ item, price });
+      total += price;
+      displayCart();
+    }
 
+    function displayCart() {
+      let cartList = document.getElementById("cartItems");
+      cartList.innerHTML = "";
+      cart.forEach((c, i) => {
+        cartList.innerHTML += `<li>${c.item} - ₹${c.price}</li>`;
+      });
+      document.getElementById("total").innerText = total;
+    }
+
+    function placeOrder() {
+      let name = document.getElementById("name").value;
+      let mobile = document.getElementById("mobile").value;
+      let address = document.getElementById("address").value;
+      let payment = document.getElementById("payment").value;
+
+      if (!name || !mobile || !address) {
+        alert("Please fill all details!");
+        return;
+      }
+
+      let orderItems = cart.map(c => `${c.item} (₹${c.price})`).join(", ");
+
+      let data = {
+        name: name,
+        mobile: mobile,
+        address: address,
+        item: orderItems,
+        payment: payment
+      };
+
+      let url = "https://script.google.com/macros/s/AKfycbyhMH16H8UndyYwXInWTbiYcsxaKsIjRwbXDlkf5ANpPftT2G7oYcQ6p6PPxpxPxMRX8A/exec"; 
+
+      fetch(url, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(() => {
+        alert("✅ Your order has been placed successfully!");
+        cart = [];
+        total = 0;
+        displayCart();
+      })
+      .catch(err => {
+        alert("❌ Error placing order. Try again!");
+      });
+    }
+  </script>
 </body>
 </html>
