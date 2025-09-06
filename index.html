@@ -12,6 +12,95 @@
     input, select { margin: 5px 0; width: 100%; padding: 8px; }
     button { background: green; color: white; border: none; padding: 10px; cursor: pointer; }
     button:hover { background: darkgreen; }
+    /* Page background */
+body {
+  background: linear-gradient(to right, #f8f9fa, #e3f2fd);
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+/* Headings */
+h1 {
+  text-align: center;
+  color: #2e7d32;
+  font-size: 32px;
+}
+h2 {
+  color: #1565c0;
+  border-bottom: 2px solid #1565c0;
+  padding-bottom: 5px;
+  margin-top: 30px;
+}
+
+/* Product cards */
+.product {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+.product img {
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+/* Cart & checkout */
+.cart, .checkout {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.checkout h2 {
+  color: #2e7d32;
+  border-color: #2e7d32;
+}
+
+/* Inputs & buttons */
+input, select {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+button {
+  border-radius: 8px;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+/* Popup */
+#popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+#popupContent {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  animation: popIn 0.4s ease;
+}
+#popupContent h3 {
+  color: #2e7d32;
+}
+#popupContent button {
+  background: #1565c0;
+  margin-top: 15px;
+}
+@keyframes popIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
   </style>
 </head>
 <body>
@@ -117,6 +206,24 @@
         alert("❌ Error placing order. Try again!");
       });
     }
+ // Create popup dynamically
+document.body.innerHTML += `
+  <div id="popup">
+    <div id="popupContent">
+      <h3>✅ Order Placed Successfully!</h3>
+      <p>Thank you for shopping with us.</p>
+      <button onclick="closePopup()">OK</button>
+    </div>
+  </div>
+`;
+
+function showPopup() {
+  document.getElementById("popup").style.display = "flex";
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
   </script>
 </body>
 </html>
